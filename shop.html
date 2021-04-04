@@ -1,0 +1,168 @@
+
+<html>
+	<head>
+		<title>RPG Shop</title>
+		<link href="shop.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="mainMenu" class="shopContainer">
+			<div class="containerTitle"><span class="containerTitle">Main Menu</span></div>
+			<button onclick="setMenu(BUY_MENU)">Buy</button><br />
+			<button onclick="setMenu(SELL_MENU)">Sell</button><br />
+			<button onclick="setMenu(INVENTORY)">Inventory</button><br />
+		</div>
+		<div id="invMenu" class="shopContainer">
+			<div class="containerTitle"><span class="containerTitle">Inventory</span></div>
+			<div id="inventoryItems" class="itemList"></div>
+			<div class="goldContainer"><span class="goldCount"></span></div><br />
+			<button onclick="setMenu(lastMenu)">Close</button>
+		</div>
+		<div id="buyMenu" class="shopContainer">
+			<div class="containerTitle"><span class="containerTitle">Buy Menu</span></div>
+			<div id="items" class="itemList"></div>
+			<div class="goldContainer"><span class="goldCount"></span></div><br />
+			<button onclick="setMenu(lastMenu)">Close</button>
+		</div>
+		<div id="sellMenu" class="shopContainer">
+			<div class="containerTitle"><span class="containerTitle">Sell Menu</span></div>
+			<div id="sellingItems" class="itemList"></div>
+			<div class="goldContainer"><span class="goldCount"></span></div><br />
+			<button onclick="setMenu(lastMenu)">Close</button>
+		</div>
+		<script>
+			var MAIN_MENU = document.getElementById('mainMenu');
+			var INVENTORY = document.getElementById('invMenu');
+			var BUY_MENU = document.getElementById('buyMenu');
+			var SELL_MENU = document.getElementById('sellMenu');
+			
+			var ITEM_LIST = [
+				new Item('Staff', 2, 10, 'staff.svg', 'A sturdy length of oak topped with an copper sphere.'),
+				new Item('Club', 4, 60, 'club.svg', 'A heavy piece of maple shaped into a tapered cylinder.'),
+				new Item('Copper Sword', 10, 180, 'copperSword.svg', 'A battle-scarred sword that was recently resharpened.'),
+				new Item('Cloth Armor', 2, 20, 'clothArmor.svg', 'Heavy wool clothes and tabard. These won\'t stop much damage.'),
+				new Item('Leather Armor', 4, 70, 'leatherArmor.svg', 'Tanned hide sewn into a tunic. A slightly loose fit.'),
+				new Item('Small Shield', 4, 90, 'smallShield.svg', 'A firm plank of oak painted blue and gold.'),
+				new Item('Fighter\'s Ring', -1, 30, 'fightersRing.svg', 'The Fighter\'s Ring! You have no idea what it does!')
+			];
+			
+			var STARTING_GOLD = 180;
+			
+			var currentMenu = MAIN_MENU;
+			var lastMenu = INVENTORY;
+			
+			function toggleDisplay(element) {
+				if(element.style.display == 'block')
+					element.style.display = '';
+				else if(element.style.display == '')
+					element.style.display = 'block';
+			}
+			
+			function setMenu(menu) {
+				toggleDisplay(currentMenu);
+				lastMenu = currentMenu;
+				currentMenu = menu;
+				toggleDisplay(currentMenu);
+			}
+			
+			function Item(name, power, cost, svg, desc) {
+				this.name = name;
+				this.power = power;
+				this.cost = cost;
+				this.svg = svg;
+				this.desc = desc;
+			}
+			
+			Item.prototype.dumpInfo = function() {
+				console.log('Name: ' + this.name + ', Power: ' + this.power + ', Cost: ' + this.cost + ', SVG: ' + this.svg);
+				console.log('    ' + this.desc);
+			}
+			
+			function buildItemPanel(item, sell) {
+				var html = '<div class="itemPanel" title="' + item.desc + '"><img class="itemImage" src="' + item.svg + '" /><div class="itemNameDiv"><span class="itemName">' + item.name + '</span></div><div class="itemCostDiv"><span class="itemCost">';
+				if(sell) html += (item.cost / 2) + '</span></div></div>';
+				else html += item.cost + '</span></div></div>';
+				return html;
+			}
+			
+			var playerGold = STARTING_GOLD;
+			
+			function updateGoldDivs() {
+				var divs = document.getElementsByClassName('goldCount');
+				for(var i = 0; i < divs.length; i++) {
+					divs[i].innerHTML = playerGold;
+				}
+			}
+			
+			var playerInventory = [];
+			
+			function updateInventory() {
+				var div1 = document.getElementById('inventoryItems');
+				var div2 = document.getElementById('sellingItems');
+				div1.innerHTML = '';
+				for(var i = 0; i < playerInventory.length; i++){
+					div1.innerHTML += buildItemPanel(playerInventory[i], true);
+				}
+				div2.innerHTML = div1.innerHTML;
+				
+				if(playerInventory.length > 0) {
+					var playerItems = document.getElementById('sellingItems').childNodes;
+					for(var i = 0; i < playerItems.length; i++) {
+						playerItems[i].onclick = function(arg) {
+							return function() {
+								confirmSale(arg);
+							}
+						}(i);
+					}
+				}
+				else {
+					div1.innerHTML = 'But nothing happens!';
+					div2.innerHTML = 'But nothing happens!';
+				}
+			}
+			
+			function confirmPurchase(item) {
+				if(playerGold >= item.cost) {
+					if(confirm("A " + item.name + " will be " + item.cost + " gold. Is that okay?")) {
+						playerGold -= item.cost;
+						playerInventory.push(item);
+						updateInventory();
+						updateGoldDivs();
+					}
+				}
+				else {
+					// TODO unable to purchase
+				}
+			}
+			
+			function confirmSale(index) {
+				if(index < 0 || index >= playerInventory.length) return;
+				var item = playerInventory[index];
+				if(confirm("Are you sure you want to sell the " + item.name + " for " + (item.cost/2) + " gold?")) {
+					playerGold += item.cost / 2;
+					playerInventory.splice(item, 1);
+					updateInventory();
+					updateGoldDivs();
+				}
+			}
+			
+			toggleDisplay(currentMenu);
+			
+			var itemsDiv = document.getElementById('items');
+			for(var i = 0; i < ITEM_LIST.length; i++) {
+				itemsDiv.innerHTML += buildItemPanel(ITEM_LIST[i]);
+			}
+			var panelDivs = itemsDiv.childNodes;
+			for(var i = 0; i < panelDivs.length; i++) {
+				var item = ITEM_LIST[i];
+				panelDivs[i].onclick = function(arg) {
+					return function() {
+						confirmPurchase(arg);
+					}
+				}(item);
+			}
+			
+			updateGoldDivs();
+			updateInventory();
+		</script>
+	</body>
+</html>

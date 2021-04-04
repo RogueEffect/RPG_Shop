@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg viewbox="0 0 40 40" width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+	<g>
+		<title>Layer 1</title>
+		<g id="svg_1">
+			<rect x="10" y="5" width="20" height="5" fill="#ebcc33" />
+			<rect x="6" y="10" width="8" height="20" fill="#ebcc33" />
+			<rect x="26" y="10" width="8" height="8" fill="#ebcc33" />
+			<rect x="18" y="22" width="8" height="5" fill="#ebcc33" />
+			<rect x="26" y="22" width="8" height="13" fill="#ebcc33" />
+			<rect x="10" y="30" width="24" height="5" fill="#ebcc33" />
+		</g>
+	</g>
+</svg>

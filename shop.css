@@ -1,0 +1,98 @@
+
+html {
+	background: #222;
+	color: lightgrey;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 1in 1in 1in 1in;
+}
+
+.shopContainer {
+	border: grey 1px solid;
+	display: none;
+	min-height: 536px;
+	height: 100%;
+	min-width: 722px;
+	width: 100%;
+	text-align: center;
+}
+
+.containerTitle {
+	color: lightgrey;
+	font-size: 48px;
+	font-weight: bold;
+	margin-top: 0.5in;
+	margin-bottom: 0.5in;
+}
+
+button {
+	margin: 0 0 18px 0;
+	width: 80px;
+}
+
+.itemList {
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 16px;
+	width: 320px;
+}
+
+.itemPanel {
+	border: grey 1px solid;
+	color: grey;
+	font-size: 18px;
+	height: 56px;
+	overflow: hidden;
+}
+
+.itemPanel:hover {
+	border: lightgrey 1px solid;
+	color: lightgrey;
+}
+
+.itemImage {
+	float: left;
+	margin: 8px 32px 0 8px;
+}
+
+.itemNameDiv {
+	float: left;
+	margin-top: 16px;
+	width: 130px;
+}
+
+.itemName {
+}
+
+.itemCostDiv {
+	float: left;
+	margin-top: 16px;
+	text-align: right;
+	width: 80px;
+}
+
+.itemCost {
+}
+
+.goldContainer {
+	background: url('dwG.svg') 8px 8px no-repeat;
+	border: grey 1px solid;
+	height: 56px;
+	width: 200px;
+	position: absolute;
+	top: 1.5in;
+	left: 1.5in;
+	z-index: 1;
+	text-align: right;
+}
+
+.goldCount {
+	color: #ebcc33;
+	display: inline-block;
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 4px;
+	margin-right: 16px;
+}
