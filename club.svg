@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <svg viewbox="0 0 40 40" width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-	<g>
-		<title>Layer 1</title>
-		<g id="svg_1">
-			<rect width="40" height="40" fill="lightgrey" />
-			<path d="M 4 32 L 8 36 L 36 12 Q 38 2 28 4 L 4 32 z" fill="#8F4700" />
-			<path d="M 4 32 L 6 34 L 28 12 L 26 6 z" fill="#A97F58" />
-		</g>
-	</g>
+    <g>
+        <title>Layer 1</title>
+        <g id="svg_1">
+            <rect width="40" height="40" fill="lightgrey" />
+            <path d="M 4 32 L 8 36 L 36 12 Q 38 2 28 4 L 4 32 z" fill="#8F4700" />
+            <path d="M 4 32 L 6 34 L 28 12 L 26 6 z" fill="#A97F58" />
+        </g>
+    </g>
 </svg>
